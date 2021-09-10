@@ -22,12 +22,9 @@ func _on_scene_change():
 	if newscene.has_node("respawn1"):
 		newback.position = newscene.get_node("respawn1").position + Vector2(-100, 0)
 		newscene.get_node("respawn1").position = base.player.position
-		print("AA")
 	elif newscene.has_node("respawn"):
 		newback.position = newscene.get_node("respawn").position + Vector2(-100, 0)
 		newscene.get_node("respawn").position = base.player.position
-	else:
-		return
 	
 	if base.level == 4:
 		var dietile = get_tree().get_nodes_in_group("die")[0]
@@ -45,7 +42,7 @@ func _on_scene_change():
 	if base.level == 5:
 		newback.final = true
 
-	newscene.add_child(newback)
+	newscene.call_deferred("add_child", newback)
 	yield(get_tree().create_timer(0.1), "timeout")
 	base.state = "play"
 	
